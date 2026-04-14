@@ -45,5 +45,28 @@ fun NavGraph(
         composable("remote/dashboard") {
             RemoteDashboardScreen(onBack = { navController.popBackStack() })
         }
+
+        // Hacker toolkit screens
+        composable("hacker/terminal") {
+            com.tinlera.toolbox.ui.screens.hacker.HackerTerminalScreen(onBack = { navController.popBackStack() })
+        }
+        composable("hacker/network") {
+            com.tinlera.toolbox.ui.screens.hacker.NetworkScanScreen(onBack = { navController.popBackStack() })
+        }
+        composable("hacker/crypto") {
+            com.tinlera.toolbox.ui.screens.hacker.CryptoScreen(onBack = { navController.popBackStack() })
+        }
+        composable("hacker/apk") {
+            com.tinlera.toolbox.ui.screens.hacker.ApkAnalyzerScreen(onBack = { navController.popBackStack() })
+        }
+        composable("hacker/db") {
+            com.tinlera.toolbox.ui.screens.hacker.DbEditorScreen(onBack = { navController.popBackStack() })
+        }
+        composable("hacker/activity") {
+            com.tinlera.toolbox.ui.screens.hacker.ActivityHunterScreen(onBack = { navController.popBackStack() })
+        }
+        composable("hacker/shredder") {
+            com.tinlera.toolbox.ui.screens.hacker.FileShredderScreen(onBack = { navController.popBackStack() })
+        }
     }
 }

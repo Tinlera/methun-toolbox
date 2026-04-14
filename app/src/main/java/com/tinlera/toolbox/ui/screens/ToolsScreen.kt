@@ -81,6 +81,19 @@ fun ToolsScreen(onNavigate: (String) -> Unit = {}) {
                     ToolItem("Gizli Ayar Kısayolları", "Gizli ayar sayfalarına erişim", Icons.Filled.SettingsApplications, route = "tool/intents"),
                 )
             ),
+            ToolCategory(
+                name = "💀 Hacker Toolkit",
+                icon = Icons.Filled.Terminal,
+                tools = listOf(
+                    ToolItem("Hacker Terminal", "Matrix tarzı root shell", Icons.Filled.Terminal, requiresRoot = true, route = "hacker/terminal"),
+                    ToolItem("Ağ Tarayıcı", "LAN cihaz keşfi, port scan, ARP tablosu", Icons.Filled.Radar, requiresRoot = true, route = "hacker/network"),
+                    ToolItem("APK Analizci", "Manifest, izinler, tracker tespiti", Icons.Filled.BugReport, route = "hacker/apk"),
+                    ToolItem("DB/Prefs Hacker", "Uygulama veritabanı ve SharedPrefs düzenle", Icons.Filled.DataObject, requiresRoot = true, route = "hacker/db"),
+                    ToolItem("Activity Hunter", "Gizli activity/servis keşfet ve başlat", Icons.Filled.Explore, route = "hacker/activity"),
+                    ToolItem("Crypto Toolkit", "MD5/SHA/Base64/Hex/ROT13 hesaplama", Icons.Filled.Lock, route = "hacker/crypto"),
+                    ToolItem("File Shredder", "Askeri standart dosya silme", Icons.Filled.DeleteForever, requiresRoot = true, route = "hacker/shredder"),
+                )
+            ),
         )
     }
 
