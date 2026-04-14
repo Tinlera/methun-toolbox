@@ -19,6 +19,7 @@ data class ToolItem(
     val description: String,
     val icon: ImageVector,
     val requiresRoot: Boolean = false,
+    val route: String? = null,
     val onClick: () -> Unit = {}
 )
 
@@ -29,14 +30,14 @@ data class ToolCategory(
 )
 
 @Composable
-fun ToolsScreen() {
+fun ToolsScreen(onNavigate: (String) -> Unit = {}) {
     val categories = remember {
         listOf(
             ToolCategory(
                 name = "📦 Uygulama Yönetimi",
                 icon = Icons.Filled.Apps,
                 tools = listOf(
-                    ToolItem("Debloat Manager", "Sistem uygulamalarını kaldır/devre dışı bırak", Icons.Filled.DeleteSweep),
+                    ToolItem("Debloat Manager", "Sistem uygulamalarını kaldır/devre dışı bırak", Icons.Filled.DeleteSweep, route = "tool/debloat"),
                     ToolItem("İzin Yöneticisi", "AppOps kontrolü", Icons.Filled.Security),
                     ToolItem("Sessiz APK Yükleyici", "Onaysız APK yükleme", Icons.Filled.InstallMobile),
                     ToolItem("Cache Temizleyici", "Toplu cache temizleme", Icons.Filled.CleaningServices),
@@ -46,7 +47,7 @@ fun ToolsScreen() {
                 name = "⚡ Performans",
                 icon = Icons.Filled.Speed,
                 tools = listOf(
-                    ToolItem("ART Optimizer", "DEX derleyici optimizasyonu", Icons.Filled.Speed),
+                    ToolItem("ART Optimizer", "DEX derleyici optimizasyonu", Icons.Filled.Speed, route = "tool/art"),
                     ToolItem("CPU/GPU Governor", "Frekans ve governor kontrolü", Icons.Filled.Memory, requiresRoot = true),
                     ToolItem("Termal Kontrol", "Isı yönetimi", Icons.Filled.Thermostat, requiresRoot = true),
                     ToolItem("Doze Manager", "Agresif pil tasarrufu", Icons.Filled.BatteryChargingFull),
@@ -56,7 +57,7 @@ fun ToolsScreen() {
                 name = "🌐 Ağ",
                 icon = Icons.Filled.Wifi,
                 tools = listOf(
-                    ToolItem("DNS Değiştirici", "Private DNS ayarı", Icons.Filled.Dns),
+                    ToolItem("DNS Değiştirici", "Private DNS ayarı", Icons.Filled.Dns, route = "tool/dns"),
                     ToolItem("hosts Editörü", "Reklam engelleme / hosts düzenleme", Icons.Filled.Block, requiresRoot = true),
                 )
             ),
@@ -72,12 +73,12 @@ fun ToolsScreen() {
                 name = "🔧 Sistem",
                 icon = Icons.Filled.Settings,
                 tools = listOf(
-                    ToolItem("build.prop Editörü", "Sistem özelliklerini düzenle", Icons.Filled.Edit, requiresRoot = true),
+                    ToolItem("build.prop Editörü", "Sistem özelliklerini düzenle", Icons.Filled.Edit, requiresRoot = true, route = "tool/buildprop"),
                     ToolItem("SELinux Toggle", "Enforcing/Permissive geçiş", Icons.Filled.Shield, requiresRoot = true),
                     ToolItem("Partition Bilgisi", "Mount durumu ve boyutlar", Icons.Filled.Storage, requiresRoot = true),
-                    ToolItem("Magisk/KSU Modülleri", "Modül yönetimi", Icons.Filled.Extension, requiresRoot = true),
+                    ToolItem("Magisk/KSU Modülleri", "Modül yönetimi", Icons.Filled.Extension, requiresRoot = true, route = "tool/modules"),
                     ToolItem("System App Yönetimi", "Sistem uygulaması yükle/kaldır", Icons.Filled.AppSettingsAlt, requiresRoot = true),
-                    ToolItem("Gizli Ayar Kısayolları", "Gizli ayar sayfalarına erişim", Icons.Filled.SettingsApplications),
+                    ToolItem("Gizli Ayar Kısayolları", "Gizli ayar sayfalarına erişim", Icons.Filled.SettingsApplications, route = "tool/intents"),
                 )
             ),
         )
@@ -103,14 +104,14 @@ fun ToolsScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         categories.forEach { category ->
-            ToolCategoryCard(category)
+            ToolCategoryCard(category, onNavigate)
             Spacer(modifier = Modifier.height(12.dp))
         }
     }
 }
 
 @Composable
-private fun ToolCategoryCard(category: ToolCategory) {
+private fun ToolCategoryCard(category: ToolCategory, onNavigate: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     ElevatedCard(
@@ -152,7 +153,7 @@ private fun ToolCategoryCard(category: ToolCategory) {
             AnimatedVisibility(visible = expanded) {
                 Column(modifier = Modifier.padding(top = 12.dp)) {
                     category.tools.forEach { tool ->
-                        ToolItemRow(tool)
+                        ToolItemRow(tool, onNavigate)
                     }
                 }
             }
@@ -161,14 +162,14 @@ private fun ToolCategoryCard(category: ToolCategory) {
 }
 
 @Composable
-private fun ToolItemRow(tool: ToolItem) {
+private fun ToolItemRow(tool: ToolItem, onNavigate: (String) -> Unit) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surfaceContainerHighest,
-        onClick = tool.onClick
+        onClick = { tool.route?.let { onNavigate(it) } }
     ) {
         Row(
             modifier = Modifier.padding(12.dp),

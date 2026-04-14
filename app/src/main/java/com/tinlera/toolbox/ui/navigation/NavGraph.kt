@@ -9,6 +9,7 @@ import com.tinlera.toolbox.ui.screens.AboutScreen
 import com.tinlera.toolbox.ui.screens.HomeScreen
 import com.tinlera.toolbox.ui.screens.ToolsScreen
 import com.tinlera.toolbox.ui.screens.TweaksScreen
+import com.tinlera.toolbox.ui.screens.tools.*
 
 @Composable
 fun NavGraph(
@@ -21,8 +22,16 @@ fun NavGraph(
         modifier = modifier
     ) {
         composable(Screen.Home.route) { HomeScreen() }
-        composable(Screen.Tools.route) { ToolsScreen() }
+        composable(Screen.Tools.route) { ToolsScreen(onNavigate = { navController.navigate(it) }) }
         composable(Screen.Tweaks.route) { TweaksScreen() }
         composable(Screen.About.route) { AboutScreen() }
+
+        // Tool detail screens
+        composable("tool/debloat") { DebloatScreen(onBack = { navController.popBackStack() }) }
+        composable("tool/art") { ArtScreen(onBack = { navController.popBackStack() }) }
+        composable("tool/dns") { DnsScreen(onBack = { navController.popBackStack() }) }
+        composable("tool/buildprop") { BuildPropScreen(onBack = { navController.popBackStack() }) }
+        composable("tool/intents") { IntentsScreen(onBack = { navController.popBackStack() }) }
+        composable("tool/modules") { ModulesScreen(onBack = { navController.popBackStack() }) }
     }
 }
