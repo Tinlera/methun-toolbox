@@ -4,11 +4,12 @@
 
 **Android Power User Toolkit**
 
-*Root & Shizuku destekli, gelişmiş Android araç kutusu*
+*Root & Shizuku destekli, gelişmiş Android araç kutusu + Uzaktan Telefon Kontrolü + Hacker Toolkit*
 
-[![Android](https://img.shields.io/badge/Android-13%2B-green?logo=android)](https://developer.android.com)
+[![Android](https://img.shields.io/badge/Android-9%2B-green?logo=android)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blue?logo=kotlin)](https://kotlinlang.org)
 [![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-purple?logo=jetpackcompose)](https://developer.android.com/jetpack/compose)
+[![Tools](https://img.shields.io/badge/Tools-35%2B-orange)]()
 [![License](https://img.shields.io/badge/License-Private-red)]()
 
 </div>
@@ -17,9 +18,9 @@
 
 ## 📖 Nedir?
 
-**Methun Toolbox**, Android cihazınızda normalde ADB + PC gerektiren gelişmiş sistem ayarlarını doğrudan telefonunuzdan yapmanızı sağlayan bir araç kutusudur. Modern Material 3 arayüzü, üç katmanlı yetki sistemi ve 26+ araçla donatılmıştır.
+**Methun Toolbox**, Android cihazınızda normalde ADB + PC gerektiren gelişmiş sistem ayarlarını doğrudan telefonunuzdan yapmanızı sağlayan bir araç kutusudur. Modern Material 3 arayüzü, üç katmanlı yetki sistemi ve 35+ araçla donatılmıştır.
 
-> 🎯 **Hedef:** PC'ye bağlamadan, tek bir uygulamayla cihazınızı tam kontrol altına alın.
+> 🎯 **Hedef:** PC'ye bağlamadan, tek bir uygulamayla cihazınızı tam kontrol altına alın — hatta başka telefonları bile kontrol edin.
 
 ---
 
@@ -87,6 +88,41 @@
 
 ---
 
+### 📱 Uzaktan Telefon Kontrolü (Remote Control)
+
+USB OTG veya WiFi ADB ile başka bir Android cihazı kendi telefonunuzdan kontrol edin!
+
+| Özellik | Açıklama |
+|---------|----------|
+| **WiFi ADB Bağlantısı** | IP:port ile kablosuz bağlantı, ağ tarama |
+| **USB OTG** | USB kablo ile direkt ADB bağlantısı |
+| **Ekran Yansıtma** | Hedef cihazın ekranını canlı izleme |
+| **Dokunmatik Kontrol** | Uzaktan tap/swipe/keyevent gönderme |
+| **Remote Shell** | Hedef cihazda terminal açma |
+| **Dosya Gezgini** | Hedef cihazın dosyalarını listeleme |
+| **Dosya Transferi** | İki yönlü push/pull dosya aktarımı |
+| **Uygulama Yönetimi** | Hedef cihazda uygulama yükle/kaldır |
+| **Cihaz Bilgisi** | Model, pil, depolama, IP gibi detaylar |
+| **Ekran Görüntüsü** | Tek tıkla screenshot al |
+
+---
+
+### 💀 Hacker Toolkit
+
+Kendi telefonunuzu "hacklemek" isteyenler için gelişmiş araçlar.
+
+| Araç | Açıklama | Yetki |
+|------|----------|-------|
+| **🖥️ Hacker Terminal** | Matrix yeşili CRT terminal — shell, logcat, dmesg entegre | Root/Normal |
+| **🌐 Ağ Tarayıcı** | Ping sweep, port scan, ARP tablosu, WiFi bilgisi, traceroute | Root |
+| **🔍 APK Analyzer** | Paket analizi, izin çıkarma, tracker tespiti, string arama | Root |
+| **🗄️ DB/SharedPrefs Editor** | Herhangi bir uygulamanın SQLite DB ve SharedPreferences dosyalarını aç/düzenle | Root |
+| **🎯 Activity Hunter** | Tüm gizli activity/service/receiver keşfi, tek tıkla başlatma | Root |
+| **🔐 Crypto Toolkit** | MD5/SHA/Base64/ROT13/Hex hash ve kodlama | Normal |
+| **💀 File Shredder** | DoD 5220.22-M askeri standartta geri dönüşümsüz dosya silme | Root |
+
+---
+
 ## 📱 Ekran Görüntüleri
 
 ```
@@ -116,8 +152,10 @@ com.tinlera.toolbox/
 │   ├── RootBridge.kt          # su -c komut çalıştırma
 │   ├── ShizukuManager.kt      # Shizuku IPC (binder lifecycle)
 │   └── DeviceInfo.kt          # Cihaz bilgi toplama
+├── remote/
+│   └── AdbClient.kt           # USB OTG + WiFi ADB bağlantı motoru
 ├── tools/
-│   ├── shizuku/               # ADB seviyesi araçlar
+│   ├── shizuku/               # ADB seviyesi araçlar (9 modül)
 │   │   ├── DebloatManager.kt
 │   │   ├── ArtOptimizer.kt
 │   │   ├── PermissionManager.kt
@@ -127,7 +165,7 @@ com.tinlera.toolbox/
 │   │   ├── IntentManager.kt
 │   │   ├── CacheCleaner.kt
 │   │   └── ApkInstaller.kt
-│   ├── root/                  # Root seviyesi araçlar
+│   ├── root/                  # Root seviyesi araçlar (8 modül)
 │   │   ├── BuildPropEditor.kt
 │   │   ├── HostsEditor.kt
 │   │   ├── ThermalController.kt
@@ -136,12 +174,18 @@ com.tinlera.toolbox/
 │   │   ├── PartitionManager.kt
 │   │   ├── ModuleManager.kt
 │   │   └── SystemAppManager.kt
+│   ├── hacker/                # Hacker Toolkit (4 modül)
+│   │   ├── NetworkScanner.kt  # Ping sweep, port scan, ARP
+│   │   ├── ApkAnalyzer.kt    # APK decompile & analiz
+│   │   └── HackerTools.kt    # DbEditor, ActivityHunter, CryptoToolkit, FileShredder
 │   └── tweaks/
 │       └── TweakManager.kt    # Settings tweaks
 └── ui/
-    ├── navigation/            # Bottom Nav + NavGraph
-    ├── screens/               # Ana ekranlar (Home, Tools, Tweaks, About)
-    └── screens/tools/         # Araç detay ekranları
+    ├── navigation/            # Bottom Nav (5 tab) + NavGraph
+    ├── screens/               # Ana ekranlar (Home, Tools, Remote, Tweaks, About)
+    ├── screens/tools/         # Araç detay ekranları
+    ├── screens/remote/        # Uzaktan kontrol ekranları
+    └── screens/hacker/        # Hacker toolkit ekranları (7 ekran)
 ```
 
 ### Teknoloji Stack
@@ -202,6 +246,8 @@ cd methun-toolbox
 - [x] 8 Root aracı (build.prop, hosts, governor, modules, vb.)
 - [x] Tweaks paneli (animasyon, ADB, AOD, font, navigasyon)
 - [x] 6 detay ekranı (Debloat, ART, DNS, build.prop, Intents, Modules)
+- [x] 📱 Remote Phone Control — WiFi ADB + USB OTG ile başka telefonu kontrol
+- [x] 💀 Hacker Toolkit — 7 araç (Terminal, Ağ Tarayıcı, APK Analyzer, DB Editor, Activity Hunter, Crypto, File Shredder)
 - [ ] Kalan detay ekranları (Thermal, Governor, Hosts, vb.)
 - [ ] Batch operasyonlar (toplu debloat profilleri)
 - [ ] Profil kaydetme/yükleme
