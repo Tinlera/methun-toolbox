@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -14,10 +15,11 @@ sealed class Screen(
 ) {
     data object Home : Screen("home", "Home", Icons.Filled.Home)
     data object Tools : Screen("tools", "Araçlar", Icons.Filled.Build)
+    data object Remote : Screen("remote", "Remote", Icons.Filled.PhoneAndroid)
     data object Tweaks : Screen("tweaks", "Tweaks", Icons.Filled.Tune)
     data object About : Screen("about", "Hakkında", Icons.Filled.Info)
 
     companion object {
-        val items = listOf(Home, Tools, Tweaks, About)
+        val items = listOf(Home, Tools, Remote, Tweaks, About)
     }
 }
